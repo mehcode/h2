@@ -104,7 +104,7 @@ impl<T, B> Client<T, B>
     }
 
     /// Send a request on a new HTTP 2.0 stream
-    pub fn request(&mut self, request: Request<()>, end_of_stream: bool)
+    pub fn send_request(&mut self, request: Request<()>, end_of_stream: bool)
         -> Result<Stream<B>, ::Error>
     {
         self.connection.send_request(request, end_of_stream)

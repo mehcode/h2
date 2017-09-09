@@ -69,7 +69,7 @@ pub fn main() {
                     .uri("https://http2.akamai.com/")
                     .body(()).unwrap();
 
-                let stream = h2.request(request, true).unwrap();
+                let stream = h2.send_request(request, true).unwrap();
 
                 let stream = stream.and_then(|response| {
                     let (_, body) = response.into_parts();

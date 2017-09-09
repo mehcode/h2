@@ -29,7 +29,7 @@ fn send_recv_headers_only() {
         .body(()).unwrap();
 
     info!("sending request");
-    let mut stream = h2.request(request, true).unwrap();
+    let mut stream = h2.send_request(request, true).unwrap();
 
     let resp = h2.run(poll_fn(|| stream.poll_response())).unwrap();
     assert_eq!(resp.status(), StatusCode::NO_CONTENT);
@@ -71,7 +71,7 @@ fn send_recv_data() {
         .body(()).unwrap();
 
     info!("sending request");
-    let mut stream = h2.request(request, false).unwrap();
+    let mut stream = h2.send_request(request, false).unwrap();
 
     // Reserve send capacity
     stream.reserve_capacity(5);
@@ -128,7 +128,7 @@ fn send_headers_recv_data_single_frame() {
         .body(()).unwrap();
 
     info!("sending request");
-    let mut stream = h2.request(request, true).unwrap();
+    let mut stream = h2.send_request(request, true).unwrap();
 
     let resp = h2.run(poll_fn(|| stream.poll_response())).unwrap();
     assert_eq!(resp.status(), StatusCode::OK);

@@ -35,7 +35,7 @@ fn send_data_without_requesting_capacity() {
         .uri("https://http2.akamai.com/")
         .body(()).unwrap();
 
-    let mut stream = h2.request(request, false).unwrap();
+    let mut stream = h2.send_request(request, false).unwrap();
 
     // The capacity should be immediately allocated
     assert_eq!(stream.capacity(), 0);
@@ -89,7 +89,7 @@ fn release_capacity_sends_window_update() {
                 .uri("https://http2.akamai.com/")
                 .body(()).unwrap();
 
-            let req = h2.request(request, true).unwrap()
+            let req = h2.send_request(request, true).unwrap()
                 .unwrap()
                 // Get the response
                 .and_then(|resp| {
@@ -152,7 +152,7 @@ fn release_capacity_of_small_amount_does_not_send_window_update() {
                 .uri("https://http2.akamai.com/")
                 .body(()).unwrap();
 
-            let req = h2.request(request, true).unwrap()
+            let req = h2.send_request(request, true).unwrap()
                 .unwrap()
                 // Get the response
                 .and_then(|resp| {
@@ -212,7 +212,7 @@ fn stream_close_by_data_frame_releases_capacity() {
                 .body(()).unwrap();
 
             // Send request
-            let mut s1 = h2.request(request, false).unwrap();
+            let mut s1 = h2.send_request(request, false).unwrap();
 
             // This effectively reserves the entire connection window
             s1.reserve_capacity(window_size);
@@ -227,7 +227,7 @@ fn stream_close_by_data_frame_releases_capacity() {
                 .body(()).unwrap();
 
             // Create a second stream
-            let mut s2 = h2.request(request, false).unwrap();
+            let mut s2 = h2.send_request(request, false).unwrap();
 
             // Request capacity
             s2.reserve_capacity(5);
@@ -309,7 +309,7 @@ fn stream_close_by_trailers_frame_releases_capacity() {
                 .body(()).unwrap();
 
             // Send request
-            let mut s1 = h2.request(request, false).unwrap();
+            let mut s1 = h2.send_request(request, false).unwrap();
 
             // This effectively reserves the entire connection window
             s1.reserve_capacity(window_size);
@@ -324,7 +324,7 @@ fn stream_close_by_trailers_frame_releases_capacity() {
                 .body(()).unwrap();
 
             // Create a second stream
-            let mut s2 = h2.request(request, false).unwrap();
+            let mut s2 = h2.send_request(request, false).unwrap();
 
             // Request capacity
             s2.reserve_capacity(5);
@@ -433,7 +433,7 @@ fn recv_window_update_on_stream_closed_by_data_frame() {
                 .uri("https://http2.akamai.com/")
                 .body(()).unwrap();
 
-            let stream = h2.request(request, false).unwrap();
+            let stream = h2.send_request(request, false).unwrap();
 
             // Wait for the response
             h2.drive(GetResponse {
