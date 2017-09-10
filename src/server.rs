@@ -195,7 +195,7 @@ impl<B: IntoBuf> Stream<B> {
             .map_err(Into::into)
     }
 
-    pub fn send_reset(mut self, reason: Reason) {
+    pub fn send_reset(self, reason: Reason) {
         self.inner.send_reset(reason)
     }
 }

@@ -425,7 +425,7 @@ impl<B, P> StreamRef<B, P>
         })
     }
 
-    pub fn send_reset(&mut self, reason: Reason) {
+    pub fn send_reset(self, reason: Reason) {
         let mut me = self.inner.lock().unwrap();
         let me = &mut *me;
 
