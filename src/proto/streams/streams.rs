@@ -408,7 +408,7 @@ impl<B, P> StreamRef<B, P>
         })
     }
 
-    pub fn send_trailers(&mut self, trailers: HeaderMap)
+    pub fn send_trailers(self, trailers: HeaderMap)
         -> Result<(), UserError>
     {
         let mut me = self.inner.lock().unwrap();

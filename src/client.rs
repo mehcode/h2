@@ -202,7 +202,7 @@ impl<B: IntoBuf> Stream<B> {
     }
 
     /// Send trailers
-    pub fn send_trailers(&mut self, trailers: HeaderMap)
+    pub fn send_trailers(self, trailers: HeaderMap)
         -> Result<(), ::Error>
     {
         self.inner.send_trailers(trailers)
