@@ -64,11 +64,23 @@ impl FlowControl {
     }
 
     pub fn claim_capacity(&mut self, capacity: WindowSize) {
+        trace!(
+            "claim_capacity; avail={} + cap={}",
+            self.available,
+            capacity
+        );
+
         assert!(self.available >= capacity);
         self.available -= capacity;
     }
 
     pub fn assign_capacity(&mut self, capacity: WindowSize) {
+        trace!(
+            "assign_capacity; avail={} + cap={}",
+            self.available,
+            capacity
+        );
+
         self.available += capacity;
     }
 
